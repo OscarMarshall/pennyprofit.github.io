@@ -3,8 +3,44 @@
         <div class="header-content-inner">
             <h1>A small amount of change can go a long way</h1>
             <hr>
-            <p>Invest your spare change to own a share of tomorrows top companies!</p>
-            <a href="#about" class="btn btn-primary btn-xl page-scroll">Find Out More</a>
+            <p>Invest your spare change to own a share of tomorrow's top companies!</p>
+            <form onsubmit="
+              var val = $('#email input').val();
+              if (val) {
+                $('#email-submit').css('display', 'inline').val('Sending...');
+                $.ajax({
+                  type: 'POST',
+                  url: 'https://api.mypennyprofit.com/prod/email-capture',
+                  contentType: 'application/json',
+                  data: JSON.stringify({email: val}),
+                  success: function (data) {
+                    if (data != 'acknowledged') {
+                      $('#email-submit').val('Error! Please try again later.');
+                      return;
+                    }
+                    $('#email-submit').val('Thanks!').attr('disabled', 'disabled');
+                    $('#email').css('height', '0');
+                  }
+                });
+              }
+              return false;">
+              <div id="email" style="height:0px; overflow:hidden; transition: height .5s">
+                <input type="email" class="form-control" placeholder="Email" style="width: 300px; margin: 20px auto" />
+              </div>
+              <a id="email-btn"
+                 class="btn btn-primary btn-xl"
+                 onclick="
+                   $('#email-btn').css('display', 'none');
+                   $('#email-submit').css('display', 'inline');
+                   $('#email').css('height', '74px');">
+                Keep me updated!
+              </a>
+              <input type="submit"
+                     id="email-submit"
+                     class="btn btn-primary btn-xl"
+                     value="Keep me updated!"
+                     style="display: none" />
+            </form>
         </div>
     </div>
 </header>

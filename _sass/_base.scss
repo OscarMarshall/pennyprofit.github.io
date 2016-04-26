@@ -78,7 +78,7 @@ aside {
         color: $theme-primary;
         @include sans-serif-font;
         font-weight: 700;
-        text-transform: uppercase;
+        text-transform: lowercase;
         &:hover,
         &:focus {
             color: darken($theme-primary, 10%);
@@ -348,4 +348,3 @@ img::-moz-selection {
 body {
     -webkit-tap-highlight-color: $theme-dark;
 }
-
